@@ -9,11 +9,26 @@ jobs:
     test-and-deploy:
         name: Test and Deploy
         runs-on: ubuntu-latest
-
+        services:
+          mysql:
+            image: mysql:latest
+            env:
+              MYSQL_ROOT_PASSWORD: root-secret
+              MYSQL_USER: admin
+              MYSQL_PASSWORD: secret
+              MYSQL_DATABASE: testdb
+            ports:
+              - 3306:3306
+            options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    
         steps:
             - name: Checkout Code
               uses: actions/checkout@v3
 
             - name: Install Dependencies
-              run: echo "THIS IS A TEST RUN 5"
- 
+              run: go mod vendor
+        
+            - name: Run unit tests
+              run: |
+                cd backend/test
+                go test

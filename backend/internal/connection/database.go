@@ -33,3 +33,15 @@ func InitializeDB(username, password, host, port, dbName string) error {
 func GetDB() *sql.DB {
 	return db
 }
+
+// CloseDB closes the database connection.
+func CloseDB() error {
+	if db != nil {
+		err := db.Close()
+		if err != nil {
+			return err
+		}
+		log.Println("Database connection closed")
+	}
+	return nil
+}

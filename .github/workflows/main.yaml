@@ -30,6 +30,12 @@ jobs:
                 cd backend && go mod vendor
             
             - name: DB Migration
+              env:
+                DB_HOST: localhost
+                DB_PORT: 3306
+                DB_NAME: testdb
+                DB_USERNAME: admin
+                DB_PASSWORD: secret
               run: cd backend && go run main.go migrate
         
             - name: Run unit tests

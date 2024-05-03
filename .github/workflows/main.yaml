@@ -17,3 +17,7 @@ jobs:
             - name: Install Dependencies
               run: echo "THIS IS A TEST RUN 5"
  
+            - name: Run unit tests
+              run: |
+                cd backend/test
+                go test

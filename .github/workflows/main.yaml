@@ -45,4 +45,4 @@ jobs:
 
             - name: Extract and append changelog
               run: |
-                echo "dummy" >> CHANGELOG.md
+                git log --pretty=format:"- %s" --since="2023-01-01" >> CHANGELOG.md

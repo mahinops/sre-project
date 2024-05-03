@@ -4,8 +4,6 @@ on:
     push: 
         branches:
             - main
-    pull_request:
-        types: [closed]
 
 jobs:
     test-and-deploy:
@@ -18,4 +16,4 @@ jobs:
 
             - name: Install Dependencies
               run: echo "THIS IS A TEST RUN 5"
-            
+ 

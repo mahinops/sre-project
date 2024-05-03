@@ -2,46 +2,67 @@
 package connection
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
+	"time"
 
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/mokhlesurr031/sre-project/backend/internal/envs"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
-var db *sql.DB
+var db *gorm.DB
 
-// InitializeDB initializes the database connection.
-func InitializeDB(username, password, host, port, dbName string) error {
-	dataSourceName := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", username, password, host, port, dbName)
-	var err error
-	db, err = sql.Open("mysql", dataSourceName)
+func initDB() error {
+	fmt.Println(envs.DB().Host)
+
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True",
+		envs.DB().Username, envs.DB().Password, envs.DB().Host, envs.DB().Port, envs.DB().Name)
+
+	d, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		return nil
+	}
+
+	db := d
+	// Set up connection pool or Get the underlying sql.DB object
+	sqlDB, err := db.DB()
 	if err != nil {
 		return err
 	}
 
-	err = db.Ping()
-	if err != nil {
+	fmt.Println("Connection Polling Set up")
+	// Configure connection pool settings
+	sqlDB.SetMaxIdleConns(10)                  // Maximum idle connections in pool
+	sqlDB.SetMaxOpenConns(100)                 // Maximum open connections
+	sqlDB.SetConnMaxLifetime(10 * time.Minute) // Maximum lifetime of a connection
+
+	// Ping to verify the database connection
+	if err := sqlDB.Ping(); err != nil {
 		return err
 	}
 
-	log.Println("Connected to the database")
 	return nil
 }
 
-// GetDB returns the database connection instance.
-func GetDB() *sql.DB {
-	return db
+// ConnectDB sets the db client of database using default configuration file
+func ConnectDB() error {
+	if err := initDB(); err != nil {
+		return err
+	}
+	return nil
 }
 
-// CloseDB closes the database connection.
+// DefaultDB returns default db
+func DefaultDB() *gorm.DB {
+	return db.Debug()
+}
+
 func CloseDB() error {
-	if db != nil {
-		err := db.Close()
-		if err != nil {
-			return err
-		}
-		log.Println("Database connection closed")
+	sqlDB, err := db.DB()
+	if err != nil {
+		return err
 	}
-	return nil
+	log.Println("Database Connection Closed")
+	return sqlDB.Close()
 }

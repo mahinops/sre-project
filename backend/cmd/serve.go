@@ -12,13 +12,12 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/mokhlesurr031/sre-project/backend/internal/connection"
-	"github.com/mokhlesurr031/sre-project/backend/internal/envs"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/spf13/cobra"
 
-	_resourceHttp "github.com/sre-project/backend/modules/resource/delivery/http"
-	_resourceRepository "github.com/sre-project/backend/modules/resource/repository"
-	_resourceUseCase "github.com/sre-project/backend/modules/resource/usecase"
+	_resourceHttp "github.com/mokhlesurr031/sre-project/backend/modules/resource/delivery/http"
+	_resourceRepository "github.com/mokhlesurr031/sre-project/backend/modules/resource/repository"
+	_resourceUseCase "github.com/mokhlesurr031/sre-project/backend/modules/resource/usecase"
 )
 
 var serveCmd = &cobra.Command{
@@ -35,16 +34,8 @@ func init() {
 func server(cmd *cobra.Command, args []string) {
 	log.Println("Running Application")
 
-	// Initialize database connection
-	err := connection.InitializeDB(
-		envs.DB().Username,
-		envs.DB().Password,
-		envs.DB().Host,
-		envs.DB().Port,
-		envs.DB().Name,
-	)
-	if err != nil {
-		log.Fatalf("Failed to connect to the database: %v", err)
+	if err := connection.ConnectDB(); err != nil {
+		log.Fatalf("Failed to initialize database: %v", err)
 	}
 
 	defer connection.CloseDB()
@@ -79,7 +70,7 @@ func buildHTTP(_ *cobra.Command, _ []string) *http.Server {
 	r := chi.NewRouter()
 	r.Get("/metrics", promhttp.Handler().ServeHTTP)
 
-	db := connection.GetDB()
+	db := connection.DefaultDB()
 	_ = db
 
 	resourceRepo := _resourceRepository.New(db)

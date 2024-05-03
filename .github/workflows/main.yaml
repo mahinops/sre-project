@@ -57,6 +57,7 @@ jobs:
 
           - name: Build and Push Docker Image
             run: |
+              cd backend
               docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_ACCESS_KEY }}
               docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/sre-project:$GITHUB_SHA .
               docker push ${{ secrets.DOCKERHUB_USERNAME }}/sre-project:$GITHUB_SHA

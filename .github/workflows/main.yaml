@@ -42,3 +42,7 @@ jobs:
               run: |
                 cd backend/test
                 go test
+
+            - name: Extract and append changelog
+              run: |
+                echo "dummy" >> CHANGELOG.md

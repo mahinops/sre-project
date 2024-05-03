@@ -42,7 +42,13 @@ jobs:
               run: |
                 cd backend/test
                 go test
+                echo $GITHUB_ACTOR
 
             - name: Extract and append changelog
               run: |
                 git log --pretty=format:"- %s" --since="2023-01-01" >> CHANGELOG.md
+                git config --global user.email "actions@github.com"
+                git config --global user.name "GitHub Actions"
+                git add CHANGELOG.md
+                git commit -m "Update changelog"
+                git push

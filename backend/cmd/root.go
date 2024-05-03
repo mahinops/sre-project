@@ -21,7 +21,7 @@ func init() {
 }
 
 func initConfig() {
-	envs.LoadDBEnvs()
+	envs.Init()
 }
 
 func Execute() {

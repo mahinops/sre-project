@@ -21,7 +21,7 @@ func DB() *Database {
 	return &db
 }
 
-func LoadDBEnvs() {
+func loadDBEnvs() {
 
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")

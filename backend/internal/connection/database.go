@@ -14,8 +14,6 @@ import (
 var db *gorm.DB
 
 func initDB() error {
-	fmt.Println(envs.DB().Host)
-
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True",
 		envs.DB().Username, envs.DB().Password, envs.DB().Host, envs.DB().Port, envs.DB().Name)
 
@@ -24,14 +22,13 @@ func initDB() error {
 		return nil
 	}
 
-	db := d
+	db = d // Assigning the value to the package-level db variable
+
 	// Set up connection pool or Get the underlying sql.DB object
 	sqlDB, err := db.DB()
 	if err != nil {
 		return err
 	}
-
-	fmt.Println("Connection Polling Set up")
 	// Configure connection pool settings
 	sqlDB.SetMaxIdleConns(10)                  // Maximum idle connections in pool
 	sqlDB.SetMaxOpenConns(100)                 // Maximum open connections

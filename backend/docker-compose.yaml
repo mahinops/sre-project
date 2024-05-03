@@ -10,3 +10,17 @@ services:
       - MYSQL_DATABASE=testdb
     ports:
       - "3306:3306"
+
+  app:
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql
+    restart: always
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: testdb
+      DB_USERNAME: admin
+      DB_PASSWORD: secret

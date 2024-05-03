@@ -44,6 +44,5 @@ jobs:
                 go test
 
             - name: Extract and append changelog
-              uses: heinrichreimer/action-github-changelog-generator@v2.3
-              with:
-                token: ${{ secrets.ACCESS_TOKEN }} 
+              run: |
+                echo "Will work on this later"

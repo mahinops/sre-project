@@ -6,11 +6,26 @@ on:
             - main
 
 jobs:
+    update-changelog:
+      name: Update Changelog
+      runs-on: ubuntu-latest
+      permissions:
+        contents: write
+
+      steps:
+        - name: Extract and append changelog
+          run: |
+            git config user.name 'mokhlesurr031'
+            git config user.email 'mokhlesurr031@gmail.com'
+            echo "">>CHANGELOG.md
+            git log --pretty=format:"- %s" --since="2023-01-01" >> CHANGELOG.md
+            git add CHANGELOG.md
+            git commit -m "update changelog"
+            git push
+
     test-and-deploy:
         name: Test and Deploy
         runs-on: ubuntu-latest
-        permissions:
-          contents: write
         services:
           mysql:
             image: mysql:latest
@@ -44,16 +59,6 @@ jobs:
               run: |
                 cd backend/test
                 go test
-
-            - name: Extract and append changelog
-              run: |
-                git config user.name 'mokhlesurr031'
-                git config user.email 'mokhlesurr031@gmail.com'
-                echo "">>CHANGELOG.md
-                git log --pretty=format:"- %s" --since="2023-01-01" >> CHANGELOG.md
-                git add CHANGELOG.md
-                git commit -m "update changelog"
-                git push
 
     build-and-push-docker-image:
         name: Build and Push Docker Image

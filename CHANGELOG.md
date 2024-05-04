@@ -1,1 +1,1 @@
-- shoot 3
+- shoot 3- output

@@ -12,7 +12,6 @@ releases:
   values:
   - ./values/mysql/values.yaml
 
-
 - name: nginx
   namespace: nginx
   chart: ingress-nginx/ingress-nginx

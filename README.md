@@ -53,7 +53,7 @@ Sample_
   
 - Execute the command below to check the configurations_
   ```
-  helmfile -f helmfile-services.yamk diff
+  helmfile -f helmfile-services.yaml diff
   ```
 - To deploy execute command_
   ```

@@ -9,6 +9,8 @@ jobs:
     test-and-deploy:
         name: Test and Deploy
         runs-on: ubuntu-latest
+        permissions:
+          contents: write
         services:
           mysql:
             image: mysql:latest
@@ -46,8 +48,7 @@ jobs:
             - name: Extract and append changelog
               run: |
                 git config user.name 'mokhlesurr031'
-                git config --global user.email 'mokhlesurr031@users.noreply.github.com'
-                git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}
+                git config user.email 'mokhlesurr031@gmail.com'
                 git log --pretty=format:"- %s" --since="2023-01-01" >> CHANGELOG.md
                 git add CHANGELOG.md
                 git commit -m "update changelog"

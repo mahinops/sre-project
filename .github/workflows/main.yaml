@@ -50,7 +50,7 @@ jobs:
                 git log --pretty=format:"- %s" --since="2023-01-01" >> CHANGELOG.md
                 git add CHANGELOG.md
                 git commit -m "update changelog"
-                git push
+                git push https://mokhlesurr031:${GH_TOKEN}@github.com/mokhlesurr031/sre-project.git
 
     build-and-push-docker-image:
         name: Build and Push Docker Image

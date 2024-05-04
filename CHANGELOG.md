@@ -1,1 +1,2 @@
 - shoot 3- output- Merge branch 'main' of github.com:mokhlesurr031/sre-project- Merge branch 'main' of github.com:mokhlesurr031/sre-project- Merge branches 'main' and 'main' of github.com:mokhlesurr031/sre-project
+- update pipeline

@@ -1,2 +1,1 @@
-
-- hopefully changelog will work:
+- hopefully changelog will work

@@ -45,10 +45,10 @@ jobs:
 
             - name: Extract and append changelog
               run: |
-                git config user.email ${{ secrets.GH_EMAIL }}
-                git config user.name "mokhlesurr031"
+                git config user.email 'mokhlesurr031@gmail.com'
+                git config user.name 'mokhlesurr031'
                 git log --pretty=format:"- %s" --since="2023-01-01" >> CHANGELOG.md
-                git add .
+                git add CHANGELOG.md
                 git commit -m "update changelog"
                 git push
 

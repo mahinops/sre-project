@@ -13,6 +13,9 @@ jobs:
         contents: write
 
       steps:
+        - name: Checkout Code
+          uses: actions/checkout@v3
+
         - name: Extract and append changelog
           run: |
             git config user.name 'mokhlesurr031'
@@ -22,6 +25,7 @@ jobs:
             git add CHANGELOG.md
             git commit -m "update changelog"
             git push
+
 
     test-and-deploy:
         name: Test and Deploy
@@ -60,6 +64,7 @@ jobs:
                 cd backend/test
                 go test
 
+                
     build-and-push-docker-image:
         name: Build and Push Docker Image
         runs-on: ubuntu-latest

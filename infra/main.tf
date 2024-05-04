@@ -100,3 +100,7 @@ resource "aws_cloudfront_origin_access_control" "s3_bucket" {
 }
 
 
+
+output "cloudfront_url" {
+  value = "https://${aws_cloudfront_distribution.s3_bucket.domain_name}"
+}

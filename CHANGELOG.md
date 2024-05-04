@@ -3,3 +3,4 @@
 - fix changelog pipeline
 - get in api
 - ingress
+- add: readme

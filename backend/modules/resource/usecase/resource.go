@@ -20,3 +20,7 @@ type ResourceUseCase struct {
 func (resource *ResourceUseCase) Post(ctx context.Context, ctr *domain.Resource) (*domain.ResourceCriteria, error) {
 	return resource.repo.Post(ctx, ctr)
 }
+
+func (resource *ResourceUseCase) Get(ctx context.Context) ([]*domain.Resource, error) {
+	return resource.repo.Get(ctx)
+}

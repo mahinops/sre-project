@@ -19,8 +19,10 @@ type ResourceCriteria struct {
 
 type ResourceUseCase interface {
 	Post(ctx context.Context, ctr *Resource) (*ResourceCriteria, error)
+	Get(ctx context.Context) ([]*Resource, error)
 }
 
 type ResourceRepository interface {
 	Post(ctx context.Context, ctr *Resource) (*ResourceCriteria, error)
+	Get(ctx context.Context) ([]*Resource, error)
 }

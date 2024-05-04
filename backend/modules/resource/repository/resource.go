@@ -30,3 +30,14 @@ func (resource *ResourceSqlStorage) Post(ctx context.Context, ctr *domain.Resour
 	}
 	return &resourceResp, nil
 }
+
+func (resource *ResourceSqlStorage) Get(ctx context.Context) ([]*domain.Resource, error) {
+	resourceList := make([]*domain.Resource, 0)
+	if err := resource.db.WithContext(ctx).Find(&resourceList).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return resourceList, nil
+}

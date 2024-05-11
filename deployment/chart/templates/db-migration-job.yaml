@@ -12,8 +12,9 @@ spec:
     spec:
       containers:
       - name: db-migration-container
-        image: "{{ .Values.image.backendRepository }}:e9e451"
+        image: "{{ .Values.image.backendRepository }}:{{ .Values.image.tag }}"
         command: ["./main", "migrate"] 
         imagePullPolicy: IfNotPresent
         {{- include "chart.envFrom" . | nindent 8 }}
       restartPolicy: Never
+  ttlSecondsAfterFinished: 30
